@@ -1,6 +1,7 @@
 package com.example.travelingproblemkomiwonazer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -200,10 +201,8 @@ public class MainActivity extends AppCompatActivity {
                     JakieStartoweMiasto(startMiast);
                     current_vertex = NumerMiasta;
                     inputs();
-
-                    shortest_distance(current_vertex);//crashh
-
-
+                    Log.d("creation","\nSciezka:");
+                    //shortest_distance(current_vertex);//wywala program
 
 
 
