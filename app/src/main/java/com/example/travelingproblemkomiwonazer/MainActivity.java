@@ -3,6 +3,7 @@ package com.example.travelingproblemkomiwonazer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -54,6 +55,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        Spinner dropdown = findViewById(R.id.spinnerMiasta);
+        String[] items= new String[]{"Gdynia",
+                "Gdansk",
+                "Krakow",
+                "Warszawa",
+                "Łódz", 
+                "Poznan", 
+                "SuchyDwor",
+                "Koleczkowo", 
+                "Pierwoszyno,",
+                "Kosakowo",
+                "Puck",
+                "Ruda",
+                "MaloCyce",
+                "Chojcnice",
+                "Adowo",
+                "Stulejowo"};
+
 
 
         };
