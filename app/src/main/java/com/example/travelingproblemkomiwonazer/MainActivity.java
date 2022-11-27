@@ -2,8 +2,10 @@ package com.example.travelingproblemkomiwonazer;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button StartButton;
     private Button SSButton;
+    static String startMiast="";
+
 
 
     @Override
@@ -41,20 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        StartButton = findViewById(R.id.ButtonStart);
-        StartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-        SSButton = findViewById(R.id.ButtonSS);
-        SSButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         Spinner dropdown = findViewById(R.id.spinnerMiasta);
         String[] items= new String[]{"Gdynia",
                 "Gdansk",
@@ -72,7 +63,33 @@ public class MainActivity extends AppCompatActivity {
                 "Chojcnice",
                 "Adowo",
                 "Stulejowo"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
 
+        StartButton = findViewById(R.id.ButtonStart);
+        StartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int wybraneMiasto=0;
+
+                if(dropdown != null && dropdown.getSelectedItem() !=null ) {
+                    startMiast = dropdown.getSelectedItem().toString();
+                    Toast.makeText(MainActivity.this, startMiast, Toast.LENGTH_SHORT).show();
+                        
+
+                } else  {
+
+                }
+
+            }
+        });
+        SSButton = findViewById(R.id.ButtonSS);
+        SSButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
         };
