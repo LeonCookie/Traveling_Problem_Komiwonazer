@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -24,7 +23,131 @@ public class MainActivity extends AppCompatActivity {
     private Button StartButton;
     private Button SSButton;
     static String startMiast="";
+    static int NumerMiasta = 0;
+    static int[][] two_dim_cost_matric = new int[1000][1000];
+    static boolean[] visited_copy_array = new boolean[1000];//odwiedzony
+    static int no_of_vertices=16,current_vertex=0,max = 999, min = 1,total_min_cost=0;
+    public void JakieStartoweMiasto(String CO){
+        switch (CO){
+            case"Gdynia":
+                NumerMiasta =0;
+                break;
+            case"Gdansk":
+                NumerMiasta =1;
+                break;
+            case"Krakow":
+                NumerMiasta =2;
+                break;
+            case"Warszawa":
+                NumerMiasta =3;
+                break;
+            case"Lodz":
+                NumerMiasta =4;
+                break;
+            case"Poznan":
+                NumerMiasta =5;
+                break;
+            case"SuchyDwor":
+                NumerMiasta =6;
+                break;
+            case"Koleczkowo":
+                NumerMiasta =7;
+                break;
+            case"Pierwoszyno":
+                NumerMiasta =8;
+                break;
+            case"Kosakowo":
+                NumerMiasta =9;
+                break;
+            case"Puck":
+                NumerMiasta =10;
+                break;
+            case"Ruda":
+                NumerMiasta =11;
+                break;
+            case"MałoCyce":
+                NumerMiasta =12;
+                break;
+            case"Chojnice":
+                NumerMiasta =13;
+                break;
+            case"Adowo":
+                NumerMiasta =14;
+                break;
+            case"Stulejowo":
+                NumerMiasta =15;
+                break;
+        }
 
+
+
+    }
+
+    public static void inputs(){
+        for (int i = 0;i<no_of_vertices; i++)
+        {
+            for(int j=0;j<no_of_vertices;j++)
+            {
+                if(i==j)// wynik tych samych miast
+                {
+                    two_dim_cost_matric[i][j]=0;
+                }
+                else
+                {
+
+
+                    //System.out.print(("Podaj kosz miedzy miastami: "+(FirstMiasto)+" --> "+(LastMiast)+": "));
+                    two_dim_cost_matric[i][j]=(int)Math.floor(Math.random()*(max-min+1)+min);
+                }
+            }
+        }
+        System.out.print("\n");
+        System.out.print("\n");
+        for(int i=0;i<no_of_vertices;i++){
+            for(int j=0;j<no_of_vertices;j++){
+                System.out.print(two_dim_cost_matric[i][j]+"    ");
+
+            }
+            System.out.println();
+        }
+
+
+    }
+    public  static  int next_visit(int c_vertex){
+        int MIN = Integer.MAX_VALUE;
+        int cost_spent =0, next_vertex = Integer.MAX_VALUE;
+        for(int i=0;i<no_of_vertices;i++)
+        {
+            if(two_dim_cost_matric[c_vertex-1][i]!=0 &&!visited_copy_array[i])
+            {
+                if(two_dim_cost_matric[c_vertex][i]+two_dim_cost_matric[i][c_vertex]<MIN)
+                {
+                    MIN = two_dim_cost_matric[c_vertex-1][i]+two_dim_cost_matric[i][c_vertex-1];
+                    cost_spent = two_dim_cost_matric[c_vertex-1][i];
+                    next_vertex = i;
+                }
+            }
+        }
+        if(MIN != Integer.MAX_VALUE)
+        {
+            total_min_cost+=cost_spent;
+        }
+        return next_vertex+1;
+    }
+    public static void shortest_distance(int c_vertex){
+
+
+        visited_copy_array[c_vertex-1]=true;
+        System.out.print(startMiast+"--->");
+        int nxt_visit = next_visit(c_vertex);
+        if(nxt_visit==Integer.MAX_VALUE+1){
+            System.out.print(current_vertex);
+            total_min_cost+=two_dim_cost_matric[c_vertex-1][current_vertex-1];
+
+            return;
+        }
+        shortest_distance(nxt_visit);
+    }
 
 
     @Override
@@ -70,17 +193,22 @@ public class MainActivity extends AppCompatActivity {
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int wybraneMiasto=0;
+                int wybraneMiasto = 0;
 
-                if(dropdown != null && dropdown.getSelectedItem() !=null ) {
+                if (dropdown != null && dropdown.getSelectedItem() != null) {
                     startMiast = dropdown.getSelectedItem().toString();
-                    Toast.makeText(MainActivity.this, startMiast, Toast.LENGTH_SHORT).show();
-                        
+                    JakieStartoweMiasto(startMiast);
+                    current_vertex = NumerMiasta;
+                    inputs();
 
-                } else  {
+                    shortest_distance(current_vertex);//crashh
+
+
+
+
+
 
                 }
-
             }
         });
         SSButton = findViewById(R.id.ButtonSS);
